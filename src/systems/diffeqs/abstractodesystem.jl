@@ -777,7 +777,7 @@ function process_DEProblem(constructor, sys::AbstractODESystem, u0map, parammap;
     varmap = canonicalize_varmap(varmap)
     varlist = collect(map(unwrap, dvs))
     missingvars = setdiff(varlist, collect(keys(varmap)))
-    setboserved = setdiff(collect(keys(varmap)), varlist)
+    setobserved = setdiff(collect(keys(varmap)), varlist)
 
     # Append zeros to the variables which are determined by the initialization system
     # This essentially bypasses the check for if initial conditions are defined for DAEs
