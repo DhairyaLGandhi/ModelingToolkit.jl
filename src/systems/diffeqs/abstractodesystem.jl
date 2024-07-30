@@ -1526,11 +1526,15 @@ function InitializationProblem{iip, specialize}(sys::AbstractODESystem,
         isys = get_initializesystem(sys; initialization_eqs)
     elseif isempty(u0map) && get_initializesystem(sys) === nothing
         isys = generate_initializesystem(sys; initialization_eqs)
-        _fully_determined = fully_determined === nothing ? length(equations(isys)) == length(unknowns(isys))
-        isys = structural_simplify(isys ; _fully_determined)
+        _fully_determined = fully_determined === nothing ?
+                            length(equations(isys)) == length(unknowns(isys)) :
+                            fully_determined
+        isys = structural_simplify(isys; _fully_determined)
     else
         isys = generate_initializesystem(sys; u0map, initialization_eqs)
-        _fully_determined = fully_determined === nothing ? length(equations(isys)) == length(unknowns(isys))
+        _fully_determined = fully_determined === nothing ?
+                            length(equations(isys)) == length(unknowns(isys)) :
+                            fully_determined
         isys = structural_simplify(isys; _fully_determined)
     end
 
